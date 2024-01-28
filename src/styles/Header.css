@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0px;
+    z-index: 1000;
+  }
+  
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.logo {
+    width: 60px;
+}
+  
+.language-dropdown {
+    width: 35px;
+}
+  
+.language-dropdown select {
+    background-color: #242424;
+    color: white;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+  
+.backButton {
+    width: 35px;
+    margin-left: -10px;
+}
+  
