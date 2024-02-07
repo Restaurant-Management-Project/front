@@ -1,81 +1,83 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import ConfirmationDialog from './ConfirmationDialogProps';
-import { LanguageContext } from '../App';
-
-interface AdditionalItem {
-  action: string;
-}
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import ConfirmationDialog from "./ConfirmationDialogProps";
+import { LanguageContext } from "../App";
+import TablewareIcon from "../assets/tableware.png";
+import GlassIcon from "../assets/glass.png";
+import CupIcon from "../assets/cup.png";
+import OtherIcon from "../assets/other.png";
+import PlateIcon from "../assets/plate.png";
 
 const CallWaiterPage: React.FC = () => {
-  const [additionalItems, setAdditionalItems] = useState<AdditionalItem[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [selectedAction, setSelectedAction] = useState('');
+  const [selectedAction, setSelectedAction] = useState("");
   const { selectedLanguage, onLanguageChange } = useContext(LanguageContext);
 
-
-  const hardcodedItems: AdditionalItem[] = [
-    { action: 'Принести стакан' },
-    { action: 'Принести ложку' },
-    { action: 'Другое' },
-  ];
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    axios.get<AdditionalItem[]>('your_backend_api_endpoint')
-      .then(response => {
-        setAdditionalItems(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching additional items:', error);
-      });
-  }, []);
 
   const translations: {
     [key: string]: {
       pageTitle: string;
-      confirmationMessage: (action: string) => string;
+      confitationTitle: string;
+      cup: string;
       glass: string;
-      spoon: string;
+      plate: string;
+      tableware: string;
       otherItem: string;
     };
   } = {
     RO: {
-      pageTitle: 'Chelner',
-      confirmationMessage: (action: string) => `Ați solicitat: ${action}. Doriți să continuați?`,
-      glass: 'Aduceți un pahar',
-      spoon: 'Aduceți o lingură',
-      otherItem: 'Altceva',
+      pageTitle: "Chelner",
+      confitationTitle: "Confirmați",
+      cup: "CANĂ",
+      glass: "PAHAR",
+      plate: "FARFURIE",
+      tableware: "TACÂM",
+      otherItem: "ALTCEVA",
     },
     RU: {
-      pageTitle: 'Вызов официанта',
-      confirmationMessage: (action: string) => `Вы позвали официанта, выбрав: ${action}. Хотите продолжить?`,
-      glass: 'Принести стакан',
-      spoon: 'Принести ложку',
-      otherItem: 'Другое',
+      pageTitle: "Вызов официанта",
+      confitationTitle: "Подтвердите",
+      cup: "КРУЖКА",
+      glass: "СТАКАН",
+      plate: "ТАРЕЛКА",
+      tableware: "ПРИБОРЫ",
+      otherItem: "ДРУГОЕ",
     },
   };
 
   const handleActionClick = (action: string) => {
-    if (action === 'Принести стакан') setSelectedAction(`'${translations[selectedLanguage].glass.toLowerCase()}'`); 
-    else if (action === 'Принести ложку') setSelectedAction(`'${translations[selectedLanguage].spoon.toLowerCase()}'`); 
-    else if (action === 'Другое') setSelectedAction(`'${translations[selectedLanguage].otherItem.toLowerCase()}'`); 
-    else setSelectedAction(`'${action.toLowerCase()}'`)
+    const translationKeyMap: Record<
+      string,
+      "glass" | "cup" | "plate" | "tableware" | "otherItem"
+    > = {
+      glass: "glass",
+      cup: "cup",
+      plate: "plate",
+      tableware: "tableware",
+      otherItem: "otherItem",
+    };
+
+    const actionKey = translationKeyMap[action];
+    const actionKeyTranslation =
+      translations[selectedLanguage][actionKey].toLowerCase();
+    setSelectedAction(actionKeyTranslation);
     setShowConfirmation(true);
   };
 
   const handleConfirm = () => {
-    axios.post('your_backend_post_endpoint', { action: selectedAction })
-      .then(response => {
-        console.log('Post request successful:', response.data);
+    axios
+      .post("your_backend_post_endpoint", { action: selectedAction })
+      .then((response) => {
+        console.log("Post request successful:", response.data);
         setShowConfirmation(false);
-        navigate('/');
+        navigate("/");
       })
-      .catch(error => {
-        console.error('Error performing post request:', error);
+      .catch((error) => {
+        console.error("Error performing post request:", error);
         setShowConfirmation(false);
+        navigate("/");
       });
   };
 
@@ -89,24 +91,45 @@ const CallWaiterPage: React.FC = () => {
         <h2>{translations[selectedLanguage].pageTitle}</h2>
         {showConfirmation ? (
           <ConfirmationDialog
-            message={translations[selectedLanguage].confirmationMessage(selectedAction)}
+            title={translations[selectedLanguage].confitationTitle}
+            message={selectedAction}
             onConfirm={handleConfirm}
             onCancel={handleCancel}
           />
         ) : (
           <div>
-            {hardcodedItems.map((item, index) => (
-              <li
-                className="linkStyle"
-                key={index}
-                onClick={() => handleActionClick(item.action)}
-              >
-                {item.action === 'Принести стакан' ? translations[selectedLanguage].glass :
-                  item.action === 'Принести ложку' ? translations[selectedLanguage].spoon :
-                  item.action === 'Другое' ? translations[selectedLanguage].otherItem :
-                  item.action}
-              </li>
-            ))}
+            <li
+              className="linkStyle"
+              onClick={() => handleActionClick("glass")}
+            >
+              <img src={GlassIcon} alt="" />
+              <span>{translations[selectedLanguage].glass}</span>
+            </li>
+            <li className="linkStyle" onClick={() => handleActionClick("cup")}>
+              <img src={CupIcon} alt="" />
+              <span>{translations[selectedLanguage].cup}</span>
+            </li>
+            <li
+              className="linkStyle"
+              onClick={() => handleActionClick("plate")}
+            >
+              <img src={PlateIcon} alt="" />
+              <span>{translations[selectedLanguage].plate}</span>
+            </li>
+            <li
+              className="linkStyle"
+              onClick={() => handleActionClick("tableware")}
+            >
+              <img src={TablewareIcon} alt="" />
+              <span>{translations[selectedLanguage].tableware}</span>
+            </li>
+            <li
+              className="linkStyle"
+              onClick={() => handleActionClick("otherItem")}
+            >
+              <img src={OtherIcon} alt="" />
+              <span>{translations[selectedLanguage].otherItem}</span>
+            </li>
           </div>
         )}
       </div>

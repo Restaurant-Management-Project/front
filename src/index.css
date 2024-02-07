@@ -4,62 +4,73 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
-  --primary-font: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --text-color: rgba(255, 255, 255, 0.87);
+  --primary-font: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --text-color: rgba(184, 184, 184, 0.87);
   --background-color: #242424;
-  --link-background: #C4E538;
+  --link-background: #c5da3f;
   --link-color: #000000;
-  --link-hover: #9AB32E;
+  --link-hover: #9ab32e;
 }
 
 body {
+  scroll-behavior: smooth;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin-top: 10vh;
   min-width: 300px;
   min-height: 100vh;
   background-color: var(--background-color);
   text-align: center;
   font-family: var(--primary-font);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
 .linkStyle {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  padding: 13px 0px;
+  justify-content: space-between;
+  margin-top: 2vh;
+  padding: 4vh 5vw 4vh 10px;
   background-color: var(--link-background);
   color: var(--link-color);
   text-decoration: none;
-  border: none;
-  border-radius: 5px;
+  border: 15px solid #1e0e00;
+  border-image: url("./assets/border.png") 40 repeat;
   cursor: pointer;
-  font-size: 21px;
-  width: 90vw;
-  max-width: 300px;
-  font-weight: 500;
+  font-size: 7.5vw;
+  min-height: 100px;
+  height: 18vh;
+  width: 95vw;
+  max-width: 500px;
+  font-weight: 600;
   transition: background-color 0.3s, transform 0.1s;
   position: relative;
 }
 
-.linkStyle:hover {
-  background-color: var(--link-hover);
-}
-
-.linkStyle:active {
-  transform: translateY(2px);
+@media screen and (min-width: 400px) {
+  .linkStyle {
+    font-size: 32px;
+  }
 }
 
 .linkStyle img {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  right: 0;
-  margin: 0 10px 0 5px;
+  position: relative;
+  width: 70px;
+  height: 70px;
+  margin: 0 5vw 0 2vw;
+}
+
+.linkStyle span {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .wrapper {
@@ -67,4 +78,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+h2 {
+  margin-top: 5px;
+  font-weight: 600;
+  font-size: 36px;
 }

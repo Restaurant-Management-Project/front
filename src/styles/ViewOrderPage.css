@@ -1,34 +1,252 @@
 .wrapper {
-  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.order-table {
-  margin-top: 20px;
+.order-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90vw;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.order-row {
+  margin: 1vh 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ddd;
+  color: #e7e7e7;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 20px;
+  height: 7vh;
+  max-width: 500px;
+  width: 90vw;
 }
 
-th, td {
-  border: 1px solid #dddddd;
+@media (orientation: landscape) {
+  .order-row {
+    height: 10vh;
+  }
+}
+
+@media (min-height: 530px) {
+  .order-row {
+    height: 7vh;
+  }
+}
+
+@media (min-height: 780px) {
+  .order-row {
+    height: 6vh;
+  }
+}
+
+.expanded-row {
+  display: flex;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  color: #e7e7e7;
+  font-size: 20px;
+  border-radius: 20px;
+  flex-direction: column;
   text-align: left;
-  padding: 8px;
+  margin: 1.5vh 0;
+  max-width: 500px;
+  width: 90vw;
 }
 
-thead {
-  /* background-color: #f2f2f2; */
+.expanded-row button {
+  border: none;
+  border-radius: 50px;
+  background-color: #9dac39;
+  width: 12vw;
+  height: 12vw;
+  max-width: 50px;
+  max-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-tfoot {
-  font-weight: bold;
+.expanded-row img {
+  width: 11vw;
+  height: 11vw;
+  max-width: 40px;
+  max-height: 40px;
 }
 
-h2 {
-  margin-top: 20px;
+.expanded-row div {
+  display: flex;
+  flex-direction: row;
+}
+
+.number {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0.6vh 3vw;
+}
+
+@media (orientation: landscape) {
+  .number {
+    margin: 0.6vh 1.5vw;
+  }
+}
+
+.expanded-body {
+  justify-content: space-between;
+  margin: 1vh 0;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5vh 0 1vh 0;
+}
+
+.buttons span {
+  align-self: left;
+  font-size: 6vw;
+  font-weight: 600;
+  color: #4f4f4f;
+  margin-right: 2vw;
+}
+
+@media (min-width: 370px) {
+  .buttons span {
+    font-size: 24px;
+  }
+}
+
+.expanded-name {
+  margin: 1vh 0;
+  flex-grow: 6;
+  width: 100%;
+  display: block;
+}
+
+.total-amount {
+  margin-top: 1.5vh;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.name {
+  flex-grow: 6;
+  max-width: 52vw;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+@media (min-width: 600px) {
+  .name {
+    max-width: 310px;
+  }
+}
+
+.price {
+  flex-grow: 2;
+}
+
+.quantity {
+  flex-grow: 2;
 }
 
 .order-header {
-  color: var(--link-background)
+  font-size: 27px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.order-header span {
+  font-size: 16px;
+}
+
+.selected-dishes {
+  margin: 1vh 2vh;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 16px;
+  width: 90vw;
+  max-width: 500px;
+}
+
+/* .selected-dishes p {
+  margin-top: 1vh;
+  line-height: 2.5vh;
+} */
+
+.selected-dishes button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1vh;
+  background-color: var(--link-background);
+  color: var(--link-color);
+  border: 15px solid #1e0e00;
+  border-image: url("../assets/border.png") 40 repeat;
+  text-decoration: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 25px;
+  min-height: 75px;
+  height: 10vh;
+  width: 100%;
+  font-weight: 600;
+  position: relative;
+}
+
+.selected-dishes img {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0 0.5vw 0 2vw;
+}
+
+.selected-dishes span {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.selected-dishes div {
+  display: block;
+  text-align: right;
+}
+
+.selected-dishes .dish-price {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dish-name {
+  flex-grow: 6;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dish-price {
+  flex-grow: 1;
+}
+
+.dish-quantity {
+  margin-left: 1em;
+  white-space: nowrap;
+}
+
+.selected-dishes-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
