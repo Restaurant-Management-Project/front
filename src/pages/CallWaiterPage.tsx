@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ConfirmationDialog from "./ConfirmationDialogProps";
@@ -12,7 +12,7 @@ import PlateIcon from "../assets/plate.png";
 const CallWaiterPage: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedAction, setSelectedAction] = useState("");
-  const { selectedLanguage, onLanguageChange } = useContext(LanguageContext);
+  const { selectedLanguage } = useContext(LanguageContext);
 
   const navigate = useNavigate();
 

@@ -10,7 +10,7 @@ const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const { selectedLanguage, onLanguageChange } = useContext(LanguageContext);
+  const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: {
     [key: string]: {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { LanguageContext } from "../App";
 import PlusSign from "../assets/plus.png";
 import MinusSign from "../assets/minus.png";
@@ -28,7 +28,8 @@ const DishRow: React.FC<DishRowProps> = ({
   onDecrement,
   dishQuantities,
 }) => {
-  const { selectedLanguage, onLanguageChange } = useContext(LanguageContext);
+  
+  const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {
     RU: {

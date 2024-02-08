@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { LanguageContext } from "../App";
 import PaymentIcon from "../assets/payment.png";
 import "../styles/ViewOrderPage.css";
@@ -13,8 +12,7 @@ interface Dish {
 }
 
 const ViewOrderPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { selectedLanguage, onLanguageChange } = useContext(LanguageContext);
+  const { selectedLanguage } = useContext(LanguageContext);
 
   const initialExpandedRows: Record<string, boolean> = {};
   const [expandedRows, setExpandedRows] = useState(initialExpandedRows);
