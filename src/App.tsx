@@ -5,6 +5,7 @@ import CallWaiterPage from "./pages/CallWaiterPage";
 import ViewOrderPage from "./pages/ViewOrderPage";
 import PaymentPage from "./pages/PaymentPage";
 import Header from "./pages/Header";
+import Tables from "./pages/Tables";
 
 export const LanguageContext = React.createContext<{
   selectedLanguage: string;
@@ -31,7 +32,8 @@ function App() {
           onLanguageChange={handleLanguageChange}
         />
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<Tables />} />
+          <Route path="/home" element={<MainPage />} />
           <Route path="/call-waiter" element={<CallWaiterPage />} />
           <Route path="/view-order" element={<ViewOrderPage />} />
           <Route path="/payment" element={<PaymentPage />} />
