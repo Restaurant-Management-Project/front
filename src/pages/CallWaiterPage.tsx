@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from '../axiosConfig';
 import ConfirmationDialog from "./ConfirmationDialogProps";
 import { LanguageContext } from "../App";
 import TablewareIcon from "../assets/tableware.png";
@@ -13,7 +13,7 @@ const CallWaiterPage: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedAction, setSelectedAction] = useState("");
   const { selectedLanguage } = useContext(LanguageContext);
-
+  const { orderId } = useParams<{ orderId: string }>(); 
   const navigate = useNavigate();
 
   const translations: {
@@ -48,36 +48,31 @@ const CallWaiterPage: React.FC = () => {
   };
 
   const handleActionClick = (action: string) => {
-    const translationKeyMap: Record<
-      string,
-      "glass" | "cup" | "plate" | "tableware" | "otherItem"
-    > = {
-      glass: "glass",
-      cup: "cup",
-      plate: "plate",
-      tableware: "tableware",
-      otherItem: "otherItem",
+    const reverseActionMapping: Record<string, number> = {
+      glass: 1,
+      cup: 2,
+      plate: 3,
+      tableware: 4,
+      otherItem: 5,
     };
-
-    const actionKey = translationKeyMap[action];
-    const actionKeyTranslation =
-      translations[selectedLanguage][actionKey].toLowerCase();
-    setSelectedAction(actionKeyTranslation);
+  
+    const actionNumber = reverseActionMapping[action];
+    setSelectedAction(actionNumber.toString());
     setShowConfirmation(true);
   };
+  
 
   const handleConfirm = () => {
     axios
-      .post("your_backend_post_endpoint", { action: selectedAction })
+      .post(`/create-request/${orderId}/${selectedAction}`)
       .then((response) => {
         console.log("Post request successful:", response.data);
         setShowConfirmation(false);
-        navigate("/");
+        navigate(`/home/${orderId}`);
       })
       .catch((error) => {
         console.error("Error performing post request:", error);
         setShowConfirmation(false);
-        navigate("/");
       });
   };
 

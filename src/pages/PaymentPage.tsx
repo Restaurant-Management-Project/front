@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from '../axiosConfig';
 import ConfirmationDialog from "./ConfirmationDialogProps";
 import CardIcon from "../assets/card.png";
 import CashIcon from "../assets/cash.png";
@@ -11,6 +11,8 @@ const PaymentPage: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const { selectedLanguage } = useContext(LanguageContext);
+  const { orderId } = useParams<{ orderId: string }>();
+
 
   const translations: {
     [key: string]: {
@@ -35,31 +37,27 @@ const PaymentPage: React.FC = () => {
   };
 
   const handlePaymentOptionClick = (option: string) => {
-    const translationKeyMap: Record<string, "cardPayment" | "cashPayment"> = {
-      card: "cardPayment",
-      cash: "cashPayment",
+    const translationKeyMap: Record<string, number> = {
+      card: 7,
+      cash:  6,
     };
 
-    const paymentOptionKey = translationKeyMap[option.toLowerCase()];
-
-    const paymentOptionTranslation =
-      translations[selectedLanguage][paymentOptionKey].toLowerCase();
-    setSelectedOption(`${paymentOptionTranslation}`);
+    const paymentNumber = translationKeyMap[option];
+    setSelectedOption(paymentNumber.toString());
     setShowConfirmation(true);
   };
 
   const handleConfirm = () => {
     axios
-      .post("your_backend_payment_endpoint", { option: selectedOption })
+      .post(`/create-request/${orderId}/${selectedOption}`)
       .then((response) => {
         console.log("Post request successful:", response.data);
         setShowConfirmation(false);
-        navigate("/");
+        navigate(`/home/${orderId}`);
       })
       .catch((error) => {
         console.error("Error performing post request:", error);
         setShowConfirmation(false);
-        navigate("/");
       });
   };
 

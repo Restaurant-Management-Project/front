@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { LanguageContext } from "../App";
 import OrderIcon from "../assets/order.png";
 import WaiterIcon from "../assets/waiter.png";
 import PayIcon from "../assets/pay.png";
 
 const MainPage: React.FC = () => {
+  const { orderId } = useParams<{ orderId: string }>(); 
   const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {
@@ -27,15 +28,15 @@ const MainPage: React.FC = () => {
     <div>
       <div className="wrapper">
         <h2>{translations[selectedLanguage].welcomeMessage}</h2>
-        <Link to="/call-waiter" className="linkStyle">
+        <Link to={`/call-waiter/${orderId}`} className="linkStyle">
           <img src={WaiterIcon} alt="" />
           {translations[selectedLanguage].callWaiter}
         </Link>
-        <Link to="/view-order" className="linkStyle">
+        <Link to={`/view-order/${orderId}`} className="linkStyle">
           <img src={OrderIcon} alt="" />
           {translations[selectedLanguage].viewOrder}
         </Link>
-        <Link to="/payment" className="linkStyle">
+        <Link to={`/payment/${orderId}`} className="linkStyle">
           <img src={PayIcon} alt="" />
           {translations[selectedLanguage].pay}
         </Link>

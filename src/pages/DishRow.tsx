@@ -44,7 +44,7 @@ const DishRow: React.FC<DishRowProps> = ({
     <React.Fragment>
       {expanded ? (
         <div className="expanded-row" onClick={onRowClick}>
-          <p className="expanded-name">{dish.name[selectedLanguage]}</p>
+          <p className="expanded-name">{dish.name[selectedLanguage].toUpperCase()}</p>
           <p>{`${dish.quantity} x ${dish.price.toFixed(2)} = ${(
             dish.quantity * dish.price
           ).toFixed(2)} MDL`}</p>
@@ -61,7 +61,7 @@ const DishRow: React.FC<DishRowProps> = ({
         </div>
       ) : (
         <div className="order-row" onClick={onRowClick}>
-          <p className="name">{dish.name[selectedLanguage]}</p>
+          <p className="name">{dish.name[selectedLanguage].toUpperCase()}</p>
           <p className="quantity">[{dish.quantity}]</p>
           <p className="price">{(dish.quantity * dish.price).toFixed(2)}</p>
         </div>

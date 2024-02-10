@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { LanguageContext } from "../App";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from '../axiosConfig'
+import { useTableId } from "./TableIdContext";
 
-const MainPage: React.FC = () => {
+const Tables: React.FC = () => {
+    const { setTableId } = useTableId();
+    const navigate = useNavigate();
   const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {
@@ -17,30 +20,31 @@ const MainPage: React.FC = () => {
 
   const handleClick = async (tableId: string) => {
     try {
+        setTableId(tableId);
       const response = await axios.get(`/init-session/${tableId}`);
       console.log("Response:", response.data);
-      // Handle response data as needed
+      const orderId = response.data;
+      navigate(`/home/${orderId}`);
     } catch (error) {
       console.error("Error:", error);
-      // Handle error
     }
   };
 
   return (
     <div>
       <div className="wrapper">
-        <Link to="/home" className="linkStyle" key="1" onClick={() => handleClick("1")}>
+        <li className="linkStyle" key="1" onClick={() => handleClick("1")}>
           {translations[selectedLanguage].table} 1
-        </Link>
-        <Link to="/home" className="linkStyle" key="2" onClick={() => handleClick("2")}>
+        </li>
+        <li className="linkStyle" key="2" onClick={() => handleClick("2")}>
           {translations[selectedLanguage].table} 2
-        </Link>
-        <Link to="/home" className="linkStyle" key="3" onClick={() => handleClick("3")}>
+        </li>
+        <li className="linkStyle" key="3" onClick={() => handleClick("3")}>
           {translations[selectedLanguage].table} 3
-        </Link>
+        </li>
       </div>
     </div>
   );
 };
 
-export default MainPage;
+export default Tables;

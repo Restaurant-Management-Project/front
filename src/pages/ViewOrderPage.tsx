@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { LanguageContext } from "../App";
-import PaymentIcon from "../assets/payment.png";
-import "../styles/ViewOrderPage.css";
 import DishRow from "./DishRow";
+import axios from '../axiosConfig';
+import PaymentIcon from "../assets/payment.png";
+import { useTableId } from "./TableIdContext";
+import "../styles/ViewOrderPage.css";
 
 interface Dish {
   key: string;
@@ -21,36 +23,69 @@ const ViewOrderPage: React.FC = () => {
   const [dishQuantities, setDishQuantities] = useState(initialQuantities);
 
   const [selectedDishes, setSelectedDishes] = useState<Dish[]>([]);
+  const  [dishes, setDishes] = useState<Dish[]>([])
+  const { tableId } = useTableId();
 
-  const dishes: Dish[] = [
-    {
-      key: "salad",
-      name: { RU: "САЛАТ С БАКЛАЖАНАМИ", RO: "SALATĂ CU VÂNĂTĂ CROCANTĂ" },
-      quantity: 1,
-      price: 90.0,
-    },
-    {
-      key: "soup",
-      name: { RU: "КУРИНЫЙ КРЕМ-СУП", RO: "CREAM SOUP DE PUI" },
-      quantity: 2,
-      price: 65.0,
-    },
-  ];
+  const totalAmount = dishes.reduce(
+    (total, dish) => total + dish.quantity * dish.price,
+    0
+  ).toFixed(2);
+  
+  useEffect(() => {
+    const fetchDishes = async () => {
+      try {
+        const response = await axios.get(`/get-by-table/${tableId}`); 
+        const data = response.data;
+        console.log(data);
+        
+        const transformedDishes: Dish[] = data.map((dish: any) => {
+          let parsedName = {};
+          if (dish.productName) {
+            try {
+              parsedName = JSON.parse(dish.productName);
+            } catch (error) {
+              console.error("Error parsing dish name:", error);
+            }
+          }
+        
+          return {
+            key: dish.key,
+            name: parsedName,
+            quantity: dish.quantity,
+            price: dish.productPrice,
+          };
+        });
+        
+        console.log(transformedDishes);
+        setDishes(transformedDishes);
+      } catch (error) {
+        console.error("Error fetching dishes:", error);
+      }
+    };
 
-  dishes.forEach((dish) => {
-    initialQuantities[dish.key] = 0;
-  });
+    fetchDishes();
+  }, []);
+
+  useEffect(() => {
+    const initialQuantities: Record<string, number> = {};
+  
+    dishes.forEach((dish) => {
+      initialQuantities[dish.key] = 0;
+    });
+
+    setDishQuantities(initialQuantities);
+  }, [dishes]);
+  
+
 
   const translations: Record<string, Record<string, string>> = {
     RU: {
       yourOrder: "Заказ:",
-      quantity: "шт.",
       totalAmount: "ВСЕГО:",
       payment: "ПЛАЧУ Я",
     },
     RO: {
       yourOrder: "Comanda:",
-      quantity: "buc.",
       totalAmount: "TOTAL:",
       payment: "PLĂTESC EU",
     },
@@ -72,18 +107,21 @@ const ViewOrderPage: React.FC = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
-
+  
     setDishQuantities((prevQuantities) => {
+      const currentQuantity = prevQuantities[rowKey] || 0;
+      const newQuantity = Math.min(
+        dishes.find((dish) => dish.key === rowKey)?.quantity || 0,
+        currentQuantity + 1
+      );
+  
       const newQuantities = {
         ...prevQuantities,
-        [rowKey]: Math.min(
-          dishes.find((dish) => dish.key === rowKey)?.quantity || 0,
-          prevQuantities[rowKey] + 1
-        ),
+        [rowKey]: newQuantity,
       };
-
+  
       if (
-        newQuantities[rowKey] > 0 &&
+        newQuantity > 0 &&
         !selectedDishes.some((dish) => dish.key === rowKey)
       ) {
         setSelectedDishes([
@@ -91,10 +129,12 @@ const ViewOrderPage: React.FC = () => {
           dishes.find((dish) => dish.key === rowKey)!,
         ]);
       }
-
+  
       return newQuantities;
     });
   };
+  
+  
 
   const handleDecrement = (
     rowKey: string,
@@ -124,7 +164,7 @@ const ViewOrderPage: React.FC = () => {
   return (
     <div className="wrapper">
       <h2 className="order-header">
-        {translations[selectedLanguage].yourOrder} 220.00 <span> (MDL)</span>{" "}
+        {translations[selectedLanguage].yourOrder} {totalAmount} <span> (MDL)</span>{" "}
       </h2>
       <div className="order-container">
         {dishes.map((dish) => (
@@ -145,7 +185,7 @@ const ViewOrderPage: React.FC = () => {
             {selectedDishes.map((dish) => (
               <div className="dish-price" key={dish.key}>
                 <p className="dish-name">
-                  {dish.name[selectedLanguage]}
+                  {dish.name[selectedLanguage].toUpperCase()}
                 </p>
                 <p className="dish-quantity">{`[${dishQuantities[dish.key]}] = ${(
                   dishQuantities[dish.key] * dish.price
