@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { LanguageContext } from "../App";
 import { useNavigate } from "react-router-dom";
-import axios from '../axiosConfig'
+import axios from "../axiosConfig";
 import { useTableId } from "./TableIdContext";
 
 const Tables: React.FC = () => {
-    const { setTableId } = useTableId();
-    const navigate = useNavigate();
+  const { setTableId } = useTableId();
+  const navigate = useNavigate();
   const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {
@@ -20,7 +20,7 @@ const Tables: React.FC = () => {
 
   const handleClick = async (tableId: string) => {
     try {
-        setTableId(tableId);
+      setTableId(tableId);
       const response = await axios.get(`/init-session/${tableId}`);
       console.log("Response:", response.data);
       const orderId = response.data;

@@ -28,7 +28,6 @@ const DishRow: React.FC<DishRowProps> = ({
   onDecrement,
   dishQuantities,
 }) => {
-  
   const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {
@@ -44,7 +43,9 @@ const DishRow: React.FC<DishRowProps> = ({
     <React.Fragment>
       {expanded ? (
         <div className="expanded-row" onClick={onRowClick}>
-          <p className="expanded-name">{dish.name[selectedLanguage].toUpperCase()}</p>
+          <p className="expanded-name">
+            {dish.name[selectedLanguage].toUpperCase()}
+          </p>
           <p>{`${dish.quantity} x ${dish.price.toFixed(2)} = ${(
             dish.quantity * dish.price
           ).toFixed(2)} MDL`}</p>

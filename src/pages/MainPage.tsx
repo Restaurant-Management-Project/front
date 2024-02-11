@@ -6,7 +6,7 @@ import WaiterIcon from "../assets/waiter.png";
 import PayIcon from "../assets/pay.png";
 
 const MainPage: React.FC = () => {
-  const { orderId } = useParams<{ orderId: string }>(); 
+  const { orderId } = useParams<{ orderId: string }>();
   const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {

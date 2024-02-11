@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { LanguageContext } from "../App";
 import DishRow from "./DishRow";
-import axios from '../axiosConfig';
+import axios from "../axiosConfig";
 import PaymentIcon from "../assets/payment.png";
 import { useTableId } from "./TableIdContext";
 import "../styles/ViewOrderPage.css";
@@ -23,21 +23,19 @@ const ViewOrderPage: React.FC = () => {
   const [dishQuantities, setDishQuantities] = useState(initialQuantities);
 
   const [selectedDishes, setSelectedDishes] = useState<Dish[]>([]);
-  const  [dishes, setDishes] = useState<Dish[]>([])
+  const [dishes, setDishes] = useState<Dish[]>([]);
   const { tableId } = useTableId();
 
-  const totalAmount = dishes.reduce(
-    (total, dish) => total + dish.quantity * dish.price,
-    0
-  ).toFixed(2);
-  
+  const totalAmount = dishes
+    .reduce((total, dish) => total + dish.quantity * dish.price, 0)
+    .toFixed(2);
+
   useEffect(() => {
     const fetchDishes = async () => {
       try {
-        const response = await axios.get(`/get-by-table/${tableId}`); 
+        const response = await axios.get(`/get-by-table/${tableId}`);
         const data = response.data;
-        console.log(data);
-        
+
         const transformedDishes: Dish[] = data.map((dish: any) => {
           let parsedName = {};
           if (dish.productName) {
@@ -47,7 +45,7 @@ const ViewOrderPage: React.FC = () => {
               console.error("Error parsing dish name:", error);
             }
           }
-        
+
           return {
             key: dish.key,
             name: parsedName,
@@ -55,8 +53,7 @@ const ViewOrderPage: React.FC = () => {
             price: dish.productPrice,
           };
         });
-        
-        console.log(transformedDishes);
+
         setDishes(transformedDishes);
       } catch (error) {
         console.error("Error fetching dishes:", error);
@@ -68,15 +65,13 @@ const ViewOrderPage: React.FC = () => {
 
   useEffect(() => {
     const initialQuantities: Record<string, number> = {};
-  
+
     dishes.forEach((dish) => {
       initialQuantities[dish.key] = 0;
     });
 
     setDishQuantities(initialQuantities);
   }, [dishes]);
-  
-
 
   const translations: Record<string, Record<string, string>> = {
     RU: {
@@ -107,19 +102,19 @@ const ViewOrderPage: React.FC = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
-  
+
     setDishQuantities((prevQuantities) => {
       const currentQuantity = prevQuantities[rowKey] || 0;
       const newQuantity = Math.min(
         dishes.find((dish) => dish.key === rowKey)?.quantity || 0,
         currentQuantity + 1
       );
-  
+
       const newQuantities = {
         ...prevQuantities,
         [rowKey]: newQuantity,
       };
-  
+
       if (
         newQuantity > 0 &&
         !selectedDishes.some((dish) => dish.key === rowKey)
@@ -129,12 +124,10 @@ const ViewOrderPage: React.FC = () => {
           dishes.find((dish) => dish.key === rowKey)!,
         ]);
       }
-  
+
       return newQuantities;
     });
   };
-  
-  
 
   const handleDecrement = (
     rowKey: string,
@@ -164,7 +157,8 @@ const ViewOrderPage: React.FC = () => {
   return (
     <div className="wrapper">
       <h2 className="order-header">
-        {translations[selectedLanguage].yourOrder} {totalAmount} <span> (MDL)</span>{" "}
+        {translations[selectedLanguage].yourOrder} {totalAmount}{" "}
+        <span> (MDL)</span>{" "}
       </h2>
       <div className="order-container">
         {dishes.map((dish) => (
@@ -175,7 +169,7 @@ const ViewOrderPage: React.FC = () => {
             onRowClick={() => handleRowClick(dish.key)}
             onIncrement={(e) => handleIncrement(dish.key, e)}
             onDecrement={(e) => handleDecrement(dish.key, e)}
-            dishQuantities={dishQuantities} 
+            dishQuantities={dishQuantities}
           />
         ))}
       </div>
@@ -187,9 +181,9 @@ const ViewOrderPage: React.FC = () => {
                 <p className="dish-name">
                   {dish.name[selectedLanguage].toUpperCase()}
                 </p>
-                <p className="dish-quantity">{`[${dishQuantities[dish.key]}] = ${(
-                  dishQuantities[dish.key] * dish.price
-                ).toFixed(2)}`}</p>
+                <p className="dish-quantity">{`[${
+                  dishQuantities[dish.key]
+                }] = ${(dishQuantities[dish.key] * dish.price).toFixed(2)}`}</p>
               </div>
             ))}
             <div className="total-amount-container">

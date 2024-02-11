@@ -6,7 +6,7 @@ import ViewOrderPage from "./pages/ViewOrderPage";
 import PaymentPage from "./pages/PaymentPage";
 import Header from "./pages/Header";
 import Tables from "./pages/Tables";
-import { TableIdProvider } from './pages/TableIdContext';
+import { TableIdProvider } from "./pages/TableIdContext";
 
 export const LanguageContext = React.createContext<{
   selectedLanguage: string;
@@ -35,7 +35,7 @@ function App() {
           />
           <Routes>
             <Route path="/" element={<Tables />} />
-            <Route path="/home/:orderId" element={<MainPage/>} />
+            <Route path="/home/:orderId" element={<MainPage />} />
             <Route path="/call-waiter/:orderId" element={<CallWaiterPage />} />
             <Route path="/view-order/:orderId" element={<ViewOrderPage />} />
             <Route path="/payment/:orderId" element={<PaymentPage />} />

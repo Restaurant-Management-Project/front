@@ -12,7 +12,9 @@ const TableIdContext = createContext<TableIdContextType>({
 
 export const useTableId = () => useContext(TableIdContext);
 
-export const TableIdProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const TableIdProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [tableId, setTableId] = useState("");
 
   return (
