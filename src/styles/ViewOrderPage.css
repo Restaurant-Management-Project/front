@@ -61,9 +61,9 @@
 }
 
 .expanded-row button {
-  border: none;
+  border: #E9CA03 3px solid;
   border-radius: 50px;
-  background-color: #9dac39;
+  background-color: #3a3a3a;
   width: 12vw;
   height: 12vw;
   max-width: 50px;

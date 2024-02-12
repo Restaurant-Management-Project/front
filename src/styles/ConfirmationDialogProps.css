@@ -4,20 +4,15 @@
   max-width: 200px;
   height: 9vh;
   margin: 20px 0.8vw 0;
-  border: none;
+  border: #E9CA03 1px solid;
+  background-color: #3a3a3a;
   border-radius: 5px;
   transition: transform 0.1s;
-}
-.cancelButton {
-  background-color: #3a3a3a;
 }
 
 .cancelButton img {
   width: 55px;
   height: 45px;
-}
-.confirmButton {
-  background-color: #3a3a3a;
 }
 
 .cancelButton:active,

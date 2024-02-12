@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import BackButton from "../assets/back.png";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logo.svg";
 import "../styles/Header.css";
 
 interface HeaderProps {
