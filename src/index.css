@@ -49,7 +49,6 @@ body {
   width: 95vw;
   max-width: 500px;
   font-weight: 600;
-  transition: background-color 0.3s, transform 0.1s;
   position: relative;
 }
 

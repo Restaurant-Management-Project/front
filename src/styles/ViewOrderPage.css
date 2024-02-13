@@ -181,10 +181,9 @@
   margin-top: 1vh;
   background-color: var(--link-background);
   color: var(--link-color);
-  border: 15px solid #1e0e00;
-  border-image: url("../assets/border.png") 40 repeat;
+  border: #E9CA03 3px solid;
+  border-radius: 15px;
   text-decoration: none;
-  border-radius: 2px;
   cursor: pointer;
   font-size: 25px;
   min-height: 75px;
@@ -196,8 +195,8 @@
 
 .selected-dishes img {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   margin: 0 0.5vw 0 2vw;
 }
 
