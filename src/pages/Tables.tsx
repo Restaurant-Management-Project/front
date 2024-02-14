@@ -3,6 +3,9 @@ import { LanguageContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import axios from "../axiosConfig";
 import { useTableId } from "./TableIdContext";
+import Number4 from "../assets/number4.png";
+import Number5 from "../assets/number5.png";
+import Number6 from "../assets/number6.png";
 
 const Tables: React.FC = () => {
   const { setTableId } = useTableId();
@@ -33,14 +36,17 @@ const Tables: React.FC = () => {
   return (
     <div>
       <div className="wrapper">
-        <li className="linkStyle" key="1" onClick={() => handleClick("1")}>
-          {translations[selectedLanguage].table} 1
+        <li className="linkStyle" key="4" onClick={() => handleClick("4")}>
+          <img src={Number4} alt="" />
+          {translations[selectedLanguage].table} 4
         </li>
-        <li className="linkStyle" key="2" onClick={() => handleClick("2")}>
-          {translations[selectedLanguage].table} 2
+        <li className="linkStyle" key="5" onClick={() => handleClick("5")}>
+          <img src={Number5} alt="" />
+          {translations[selectedLanguage].table} 5
         </li>
-        <li className="linkStyle" key="3" onClick={() => handleClick("3")}>
-          {translations[selectedLanguage].table} 3
+        <li className="linkStyle" key="6" onClick={() => handleClick("6")}>
+          <img src={Number6} alt="" />
+          {translations[selectedLanguage].table} 6
         </li>
       </div>
     </div>
