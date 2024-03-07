@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import CallWaiterPage from "./pages/CallWaiterPage";
 import ViewOrderPage from "./pages/ViewOrderPage";
 import PaymentPage from "./pages/PaymentPage";
 import Header from "./pages/Header";
 import axios from "./axiosConfig";
+import Tables from "./pages/Tables";
 import { BrowserRouter } from "react-router-dom";
 
 export const LanguageContext = React.createContext<{
@@ -21,6 +22,7 @@ function App() {
   const [tableId, setTableId] = useState<string | null>(
     localStorage.getItem("tableId")
   );
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   useEffect(() => {
     async function initializeSession() {
@@ -31,6 +33,7 @@ function App() {
         const storedTableId = localStorage.getItem("tableId");
         if (storedTableId) {
           setTableId(storedTableId);
+          setLoading(false); // Mark loading as false when data fetching is complete
           return;
         }
       } else {
@@ -53,8 +56,10 @@ function App() {
 
   return (
     
-    <BrowserRouter>
-  
+    <Router>
+      {loading ? ( // Display loading indicator while loading is true
+        <div>Loading...</div>
+      ) : (
         <LanguageContext.Provider
           value={{ selectedLanguage, onLanguageChange: handleLanguageChange }}
         >
@@ -63,6 +68,7 @@ function App() {
             onLanguageChange={handleLanguageChange}
           />
           <Routes>
+            <Route path="/" element={<Tables />} />
             <Route
               path="/home/:orderId"
               element={<MainPage tableId={tableId} />}
@@ -75,8 +81,8 @@ function App() {
             <Route path="/payment/:orderId" element={<PaymentPage />} />
           </Routes>
         </LanguageContext.Provider>
-      
-    </BrowserRouter>
+      )}
+    </Router>
   );
 }
 
