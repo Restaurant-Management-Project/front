@@ -7,6 +7,7 @@ import PaymentPage from "./pages/PaymentPage";
 import Header from "./pages/Header";
 import axios from "./axiosConfig";
 import Tables from "./pages/Tables";
+import { BrowserRouter } from "react-router-dom";
 
 export const LanguageContext = React.createContext<{
   selectedLanguage: string;
@@ -54,7 +55,8 @@ function App() {
   };
 
   return (
-    <Router>
+    
+    <BrowserRouter>
       {loading ? ( // Display loading indicator while loading is true
         <div>Loading...</div>
       ) : (
@@ -80,7 +82,7 @@ function App() {
           </Routes>
         </LanguageContext.Provider>
       )}
-    </Router>
+    </BrowserRouter>
   );
 }
 
