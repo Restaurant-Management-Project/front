@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import { LanguageContext } from "../App";
-import { useNavigate } from "react-router-dom";
 import Number4 from "../assets/number4.png";
 import Number5 from "../assets/number5.png";
 import Number6 from "../assets/number6.png";
 
 const Tables: React.FC = () => {
-  const navigate = useNavigate();
   const { selectedLanguage } = useContext(LanguageContext);
 
   const translations: Record<string, Record<string, string>> = {
