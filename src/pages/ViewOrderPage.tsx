@@ -3,7 +3,6 @@ import { LanguageContext } from "../App";
 import DishRow from "./DishRow";
 import axios from "../axiosConfig";
 import PaymentIcon from "../assets/payment.png";
-import { useTableId } from "./TableIdContext";
 import "../styles/ViewOrderPage.css";
 
 interface Dish {
@@ -13,7 +12,11 @@ interface Dish {
   price: number;
 }
 
-const ViewOrderPage: React.FC = () => {
+interface Props {
+  tableId: string | null; 
+}
+
+const ViewOrderPage: React.FC<Props> = ({ tableId }) => { 
   const { selectedLanguage } = useContext(LanguageContext);
 
   const initialExpandedRows: Record<string, boolean> = {};
@@ -24,7 +27,6 @@ const ViewOrderPage: React.FC = () => {
 
   const [selectedDishes, setSelectedDishes] = useState<Dish[]>([]);
   const [dishes, setDishes] = useState<Dish[]>([]);
-  const { tableId } = useTableId();
 
   const totalAmount = dishes
     .reduce((total, dish) => total + dish.quantity * dish.price, 0)
@@ -35,7 +37,6 @@ const ViewOrderPage: React.FC = () => {
       try {
         const response = await axios.get(`/get-by-table/${tableId}`);
         const data = response.data;
-
         const transformedDishes: Dish[] = data.map((dish: any) => {
           let parsedName = {};
           if (dish.productName) {

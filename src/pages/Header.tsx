@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const location = useLocation();
 
-  const isMainPage = location.pathname === "/";
+  const isMainPage = (location.pathname.startsWith("/home/") && location.pathname.length > 6) || location.pathname === "/";;
 
   return (
     <div>

@@ -5,7 +5,11 @@ import OrderIcon from "../assets/order.png";
 import WaiterIcon from "../assets/waiter.png";
 import PayIcon from "../assets/pay.png";
 
-const MainPage: React.FC = () => {
+interface Props {
+  tableId: string | null; 
+}
+
+const MainPage: React.FC<Props> = ({ tableId }) => {
   const { orderId } = useParams<{ orderId: string }>();
   const { selectedLanguage } = useContext(LanguageContext);
 
@@ -27,7 +31,7 @@ const MainPage: React.FC = () => {
   return (
     <div>
       <div className="wrapper">
-        <h2>{translations[selectedLanguage].welcomeMessage}</h2>
+        <h2>{translations[selectedLanguage].welcomeMessage} #{tableId}</h2>
         <Link to={`/call-waiter/${orderId}`} className="linkStyle">
           <img src={WaiterIcon} alt="" />
           {translations[selectedLanguage].callWaiter}
