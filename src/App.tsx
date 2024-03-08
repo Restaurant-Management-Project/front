@@ -36,14 +36,65 @@ function App() {
             />
             <Routes>
               <Route path="/" element={<Tables />} />
-              <Route path="/loading/4" element={<div>Loading...</div>} />
-              <Route path="/loading/5" element={<div>Loading...</div>} />
-              <Route path="/loading/6" element={<div>Loading...</div>} />
+              <Route
+                path="/loading/4"
+                element={
+                  <div>
+                    Loading...
+                    <SessionInitializer>
+                      {(tableId) => (
+                        <div>
+                          {tableId ? (
+                            <div>Table ID: {tableId}</div>
+                          ) : (
+                            <div>No table ID available</div>
+                          )}
+                        </div>
+                      )}
+                    </SessionInitializer>{" "}
+                  </div>
+                }
+              />
+              <Route path="/loading/5" element={
+                  <div>
+                    Loading...
+                    <SessionInitializer>
+                      {(tableId) => (
+                        <div>
+                          {tableId ? (
+                            <div>Table ID: {tableId}</div>
+                          ) : (
+                            <div>No table ID available</div>
+                          )}
+                        </div>
+                      )}
+                    </SessionInitializer>{" "}
+                  </div>
+                } />
+              <Route path="/loading/6" element={
+                  <div>
+                    Loading...
+                    <SessionInitializer>
+                      {(tableId) => (
+                        <div>
+                          {tableId ? (
+                            <div>Table ID: {tableId}</div>
+                          ) : (
+                            <div>No table ID available</div>
+                          )}
+                        </div>
+                      )}
+                    </SessionInitializer>{" "}
+                  </div>
+                } />
               <Route
                 path="/home/:orderId"
                 element={<MainPage tableId={tableId} />}
               />
-              <Route path="/call-waiter/:orderId" element={<CallWaiterPage />} />
+              <Route
+                path="/call-waiter/:orderId"
+                element={<CallWaiterPage />}
+              />
               <Route
                 path="/view-order/:orderId"
                 element={<ViewOrderPage tableId={tableId} />}
