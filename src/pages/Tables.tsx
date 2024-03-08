@@ -3,9 +3,11 @@ import { LanguageContext } from "../App";
 import Number4 from "../assets/number4.png";
 import Number5 from "../assets/number5.png";
 import Number6 from "../assets/number6.png";
+import { useNavigate } from "react-router-dom";
 
 const Tables: React.FC = () => {
   const { selectedLanguage } = useContext(LanguageContext);
+  const navigate = useNavigate(); // Using useNavigate hook from react-router-dom
 
   const translations: Record<string, Record<string, string>> = {
     RU: {
@@ -18,7 +20,7 @@ const Tables: React.FC = () => {
 
   const handleClick = async (tableId: string) => {
     try {
-      window.location.href = `/loading/${tableId}`;
+      navigate(`/loading/${tableId}`);
     } catch (error) {
       console.error("Error:", error);
     }

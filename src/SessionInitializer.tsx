@@ -13,7 +13,7 @@ function SessionInitializer({ children }: SessionInitializerProps) {
   useEffect(() => {
     async function initializeSession() {
       console.log("Pathname:", window.location.pathname);
-      const tableIdMatch = window.location.pathname.match(/\/home\/(\d+)\/?$/);
+      const tableIdMatch = window.location.pathname.match(/\/loading\/(\d+)\/?$/);
       const tableId = tableIdMatch ? tableIdMatch[1] : null;
       if (!tableId) {
         const storedTableId = localStorage.getItem("tableId");
