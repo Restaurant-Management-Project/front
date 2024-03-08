@@ -37,7 +37,7 @@ function SessionInitializer({ children }: SessionInitializerProps) {
     initializeSession();
   }, []);
 
-  return loading ? <div>Loading...</div> : children(tableId);
+  return children(tableId);
 }
 
 export default SessionInitializer;
