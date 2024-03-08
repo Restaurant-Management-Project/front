@@ -2,8 +2,16 @@
     "version": 2,
     "routes": [
       {
-        "src": "/home/:orderId",
-        "dest": "./src/pages/MainPage.tsx"
+        "src": "/home/4",
+        "dest": "./src/loading.html"
+      },
+      {
+        "src": "/home/5",
+        "dest": "./src/loading.html"
+      },
+      {
+        "src": "/home/6",
+        "dest": "./src/loading.html"
       }
     ]
   }
