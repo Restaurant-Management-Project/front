@@ -9,7 +9,6 @@ function SessionInitializer({ children }: SessionInitializerProps) {
   const [tableId, setTableId] = useState<string | null>(
     localStorage.getItem("tableId")
   );
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function initializeSession() {
@@ -20,7 +19,6 @@ function SessionInitializer({ children }: SessionInitializerProps) {
         const storedTableId = localStorage.getItem("tableId");
         if (storedTableId) {
           setTableId(storedTableId);
-          setLoading(false);
           return;
         }
       } else {
