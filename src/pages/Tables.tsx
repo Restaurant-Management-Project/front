@@ -18,7 +18,7 @@ const Tables: React.FC = () => {
 
   const handleClick = async (tableId: string) => {
     try {
-      window.location.href = `/home/${tableId}`;
+      window.location.href = `/loading/${tableId}`;
     } catch (error) {
       console.error("Error:", error);
     }

@@ -36,9 +36,9 @@ function App() {
             />
             <Routes>
               <Route path="/" element={<Tables />} />
-              <Route path="/home/4" element={<div>Loading...</div>} />
-              <Route path="/home/5" element={<div>Loading...</div>} />
-              <Route path="/home/6" element={<div>Loading...</div>} />
+              <Route path="/loading/4" element={<div>Loading...</div>} />
+              <Route path="/loading/5" element={<div>Loading...</div>} />
+              <Route path="/loading/6" element={<div>Loading...</div>} />
               <Route
                 path="/home/:orderId"
                 element={<MainPage tableId={tableId} />}
