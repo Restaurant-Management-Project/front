@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/home/:orderId",
+        "dest": "./src/pages/MainPage.tsx"
+      }
+    ]
+  }
+  
