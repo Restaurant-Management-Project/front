@@ -172,7 +172,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       )}
       {selectedDishes.length > 0 && (
         <div className="selected-dishes">
-          <h3>
+          <h2>
                 {translations[selectedLanguage].payment}{":  "}
                 {selectedDishes
                   .reduce(
@@ -182,7 +182,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
                   )
                   .toFixed(2)}{" "}
                 MDL
-              </h3>
+              </h2>
           <div className="selected-dishes-text">
             {selectedDishes.map((dish) => (
               <div className="dish-price" key={dish.key}>
