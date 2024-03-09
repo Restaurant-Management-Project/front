@@ -2,8 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { LanguageContext } from "../App";
 import DishRow from "./DishRow";
 import axios from "../axiosConfig";
-import PaymentIcon from "../assets/payment.png";
-import { useTableId } from "./TableIdContext";
+// import PaymentIcon from "../assets/payment.png";
 import "../styles/ViewOrderPage.css";
 
 interface Dish {
@@ -13,7 +12,11 @@ interface Dish {
   price: number;
 }
 
-const ViewOrderPage: React.FC = () => {
+interface Props {
+  tableId: string | null; 
+}
+
+const ViewOrderPage: React.FC<Props> = ({ tableId }) => { 
   const { selectedLanguage } = useContext(LanguageContext);
 
   const initialExpandedRows: Record<string, boolean> = {};
@@ -24,7 +27,6 @@ const ViewOrderPage: React.FC = () => {
 
   const [selectedDishes, setSelectedDishes] = useState<Dish[]>([]);
   const [dishes, setDishes] = useState<Dish[]>([]);
-  const { tableId } = useTableId();
 
   const totalAmount = dishes
     .reduce((total, dish) => total + dish.quantity * dish.price, 0)
@@ -35,7 +37,6 @@ const ViewOrderPage: React.FC = () => {
       try {
         const response = await axios.get(`/get-by-table/${tableId}`);
         const data = response.data;
-
         const transformedDishes: Dish[] = data.map((dish: any) => {
           let parsedName = {};
           if (dish.productName) {
@@ -78,11 +79,15 @@ const ViewOrderPage: React.FC = () => {
       yourOrder: "Заказ:",
       totalAmount: "ВСЕГО:",
       payment: "ПЛАЧУ Я",
+      message1: "Выбери свои блюда <кликни на товар> 👆",
+      message2: "Выбери количество <➖> / <➕>"
     },
     RO: {
       yourOrder: "Comanda:",
       totalAmount: "TOTAL:",
       payment: "PLĂTESC EU",
+      message1: "Alege produsele tale <click pe produs> 👆",
+      message2: "Alege cantitatea <➖> / <➕>"
     },
   };
 
@@ -149,17 +154,56 @@ const ViewOrderPage: React.FC = () => {
     });
   };
 
-  const handlePayClick = () => {
-    console.log("Payment process initiated");
-    console.log("Selected Dishes:", selectedDishes);
-  };
-
   return (
     <div className="wrapper">
       <h2 className="order-header">
         {translations[selectedLanguage].yourOrder} {totalAmount}{" "}
         <span> (MDL)</span>{" "}
       </h2>
+      {selectedDishes.length == 0 && (
+          <div className="selected-dishes">
+            <h3>
+                {translations[selectedLanguage].message1}
+            </h3>
+            <h3>
+                {translations[selectedLanguage].message2}
+            </h3>
+        </div>
+      )}
+      {selectedDishes.length > 0 && (
+        <div className="selected-dishes">
+          <h3>
+                {translations[selectedLanguage].payment}{":  "}
+                {selectedDishes
+                  .reduce(
+                    (total, dish) =>
+                      total + dishQuantities[dish.key] * dish.price,
+                    0
+                  )
+                  .toFixed(2)}{" "}
+                MDL
+              </h3>
+          <div className="selected-dishes-text">
+            {selectedDishes.map((dish) => (
+              <div className="dish-price" key={dish.key}>
+                <p className="dish-name">
+                  {dish.name[selectedLanguage].toUpperCase()}
+                </p>
+                <p className="dish-quantity">{`[${
+                  dishQuantities[dish.key]
+                }] = ${(dishQuantities[dish.key] * dish.price).toFixed(2)}`}</p>
+              </div>
+            ))}
+            <div className="total-amount-container">
+
+            </div>
+          </div>
+          {/* <button onClick={handlePayClick}>
+            <img src={PaymentIcon} alt="" />
+            <span>{translations[selectedLanguage].payment}</span>
+          </button> */}
+        </div>
+      )}
       <div className="order-container">
         {dishes.map((dish) => (
           <DishRow
@@ -173,39 +217,7 @@ const ViewOrderPage: React.FC = () => {
           />
         ))}
       </div>
-      {selectedDishes.length > 0 && (
-        <div className="selected-dishes">
-          <div className="selected-dishes-text">
-            {selectedDishes.map((dish) => (
-              <div className="dish-price" key={dish.key}>
-                <p className="dish-name">
-                  {dish.name[selectedLanguage].toUpperCase()}
-                </p>
-                <p className="dish-quantity">{`[${
-                  dishQuantities[dish.key]
-                }] = ${(dishQuantities[dish.key] * dish.price).toFixed(2)}`}</p>
-              </div>
-            ))}
-            <div className="total-amount-container">
-              <p>
-                {translations[selectedLanguage].totalAmount}{" "}
-                {selectedDishes
-                  .reduce(
-                    (total, dish) =>
-                      total + dishQuantities[dish.key] * dish.price,
-                    0
-                  )
-                  .toFixed(2)}{" "}
-                MDL
-              </p>
-            </div>
-          </div>
-          <button onClick={handlePayClick}>
-            <img src={PaymentIcon} alt="" />
-            <span>{translations[selectedLanguage].payment}</span>
-          </button>
-        </div>
-      )}
+      
     </div>
   );
 };

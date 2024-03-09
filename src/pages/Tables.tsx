@@ -1,16 +1,13 @@
 import React, { useContext } from "react";
 import { LanguageContext } from "../App";
-import { useNavigate } from "react-router-dom";
-import axios from "../axiosConfig";
-import { useTableId } from "./TableIdContext";
 import Number4 from "../assets/number4.png";
 import Number5 from "../assets/number5.png";
 import Number6 from "../assets/number6.png";
+import { useNavigate } from "react-router-dom";
 
 const Tables: React.FC = () => {
-  const { setTableId } = useTableId();
-  const navigate = useNavigate();
   const { selectedLanguage } = useContext(LanguageContext);
+  const navigate = useNavigate(); // Using useNavigate hook from react-router-dom
 
   const translations: Record<string, Record<string, string>> = {
     RU: {
@@ -23,11 +20,7 @@ const Tables: React.FC = () => {
 
   const handleClick = async (tableId: string) => {
     try {
-      setTableId(tableId);
-      const response = await axios.get(`/init-session/${tableId}`);
-      console.log("Response:", response.data);
-      const orderId = response.data;
-      navigate(`/home/${orderId}`);
+      navigate(`/loading/${tableId}`);
     } catch (error) {
       console.error("Error:", error);
     }
