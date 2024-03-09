@@ -12,9 +12,9 @@ function SessionInitializer({ children }: SessionInitializerProps) {
 
   useEffect(() => {
     async function initializeSession() {
-      console.log("Pathname:", window.location.pathname);
-      const tableIdMatch = window.location.pathname.match(/\/loading\/(\d+)\/?$/);
-      const tableId = tableIdMatch ? tableIdMatch[1] : null;
+      const hashValue = window.location.hash.substring(1); // Extract value after #
+      const id = parseInt(hashValue, 10); // Parse the value as an integer
+      const tableId = !isNaN(id) ? id : null; // Check if it's a valid number
       if (!tableId) {
         const storedTableId = localStorage.getItem("tableId");
         if (storedTableId) {
@@ -22,12 +22,12 @@ function SessionInitializer({ children }: SessionInitializerProps) {
           return;
         }
       } else {
-        setTableId(tableId);
-        localStorage.setItem("tableId", tableId);
+        setTableId(String(tableId)); // Convert back to string before setting state
+        localStorage.setItem("tableId", String(tableId));
       }
       console.log("tableId:", tableId);
       if (tableId) {
-        const response = await axios.get(`/init-session/${tableId}`);
+        const response = await axios.get(`/init-session/${String(tableId)}`);
         console.log("response.data:", response.data);
         window.location.href = `/home/${response.data}`;
       }

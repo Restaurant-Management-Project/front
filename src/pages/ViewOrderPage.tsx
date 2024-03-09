@@ -161,6 +161,41 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
         {translations[selectedLanguage].yourOrder} {totalAmount}{" "}
         <span> (MDL)</span>{" "}
       </h2>
+      {selectedDishes.length > 0 && (
+        
+        <div className="selected-dishes">
+          <p>
+                {translations[selectedLanguage].payment}{":  "}
+                {selectedDishes
+                  .reduce(
+                    (total, dish) =>
+                      total + dishQuantities[dish.key] * dish.price,
+                    0
+                  )
+                  .toFixed(2)}{" "}
+                MDL
+              </p>
+          <div className="selected-dishes-text">
+            {selectedDishes.map((dish) => (
+              <div className="dish-price" key={dish.key}>
+                <p className="dish-name">
+                  {dish.name[selectedLanguage].toUpperCase()}
+                </p>
+                <p className="dish-quantity">{`[${
+                  dishQuantities[dish.key]
+                }] = ${(dishQuantities[dish.key] * dish.price).toFixed(2)}`}</p>
+              </div>
+            ))}
+            <div className="total-amount-container">
+
+            </div>
+          </div>
+          {/* <button onClick={handlePayClick}>
+            <img src={PaymentIcon} alt="" />
+            <span>{translations[selectedLanguage].payment}</span>
+          </button> */}
+        </div>
+      )}
       <div className="order-container">
         {dishes.map((dish) => (
           <DishRow
@@ -174,39 +209,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
           />
         ))}
       </div>
-      {selectedDishes.length > 0 && (
-        <div className="selected-dishes">
-          <div className="selected-dishes-text">
-            {selectedDishes.map((dish) => (
-              <div className="dish-price" key={dish.key}>
-                <p className="dish-name">
-                  {dish.name[selectedLanguage].toUpperCase()}
-                </p>
-                <p className="dish-quantity">{`[${
-                  dishQuantities[dish.key]
-                }] = ${(dishQuantities[dish.key] * dish.price).toFixed(2)}`}</p>
-              </div>
-            ))}
-            <div className="total-amount-container">
-              <p>
-                {translations[selectedLanguage].totalAmount}{" "}
-                {selectedDishes
-                  .reduce(
-                    (total, dish) =>
-                      total + dishQuantities[dish.key] * dish.price,
-                    0
-                  )
-                  .toFixed(2)}{" "}
-                MDL
-              </p>
-            </div>
-          </div>
-          <button onClick={handlePayClick}>
-            <img src={PaymentIcon} alt="" />
-            <span>{translations[selectedLanguage].payment}</span>
-          </button>
-        </div>
-      )}
+      
     </div>
   );
 };
