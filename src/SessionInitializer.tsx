@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 interface SessionInitializerProps {
   children: (tableId: string | null) => React.ReactNode;
 }
 
 function SessionInitializer({ children }: SessionInitializerProps) {
+  const navigate = useNavigate(); 
   const [tableId, setTableId] = useState<string | null>(
     localStorage.getItem("tableId")
   );
@@ -29,11 +31,14 @@ function SessionInitializer({ children }: SessionInitializerProps) {
       if (tableId) {
         const response = await axios.get(`/init-session/${String(tableId)}`);
         console.log("response.data:", response.data);
-        window.location.href = `/home/${response.data}`;
+        const orderId = response.data; 
+        if (orderId) {
+          navigate(`/home/${orderId}`);
+        }
       }
     }
     initializeSession();
-  }, []);
+  }, [navigate]); 
 
   return children(tableId);
 }

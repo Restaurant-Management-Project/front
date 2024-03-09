@@ -79,11 +79,15 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       yourOrder: "Заказ:",
       totalAmount: "ВСЕГО:",
       payment: "ПЛАЧУ Я",
+      message1: "Выбери свои блюда <кликни на товар> 👆",
+      message2: "Выбери количество <➖> / <➕>"
     },
     RO: {
       yourOrder: "Comanda:",
       totalAmount: "TOTAL:",
       payment: "PLĂTESC EU",
+      message1: "Alege produsele tale <click pe produs> 👆",
+      message2: "Alege cantitatea <➖> / <➕>"
     },
   };
 
@@ -156,10 +160,19 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
         {translations[selectedLanguage].yourOrder} {totalAmount}{" "}
         <span> (MDL)</span>{" "}
       </h2>
+      {selectedDishes.length == 0 && (
+          <div className="selected-dishes">
+            <h3>
+                {translations[selectedLanguage].message1}
+            </h3>
+            <h3>
+                {translations[selectedLanguage].message2}
+            </h3>
+        </div>
+      )}
       {selectedDishes.length > 0 && (
-        
         <div className="selected-dishes">
-          <p>
+          <h3>
                 {translations[selectedLanguage].payment}{":  "}
                 {selectedDishes
                   .reduce(
@@ -169,7 +182,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
                   )
                   .toFixed(2)}{" "}
                 MDL
-              </p>
+              </h3>
           <div className="selected-dishes-text">
             {selectedDishes.map((dish) => (
               <div className="dish-price" key={dish.key}>

@@ -5,7 +5,6 @@ import CallWaiterPage from "./pages/CallWaiterPage";
 import ViewOrderPage from "./pages/ViewOrderPage";
 import PaymentPage from "./pages/PaymentPage";
 import Header from "./pages/Header";
-import Tables from "./pages/Tables";
 import SessionInitializer from "./SessionInitializer";
 
 export const LanguageContext = React.createContext<{
@@ -24,69 +23,18 @@ function App() {
   };
 
   return (
-    <SessionInitializer>
-      {(tableId) => (
-        <Router>
-          <LanguageContext.Provider
-            value={{ selectedLanguage, onLanguageChange: handleLanguageChange }}
-          >
-            <Header
-              selectedLanguage={selectedLanguage}
-              onLanguageChange={handleLanguageChange}
-            />
+    <Router>
+      <LanguageContext.Provider
+        value={{ selectedLanguage, onLanguageChange: handleLanguageChange }}
+      >
+        <Header
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
+        />
+        <SessionInitializer>
+          {(tableId) => (
             <Routes>
-              <Route path="/" element={<Tables />} />
-              <Route
-                path="/loading/4"
-                element={
-                  <div>
-                    Loading...
-                    <SessionInitializer>
-                      {(tableId) => (
-                        <div>
-                          {tableId ? (
-                            <div>Table ID: {tableId}</div>
-                          ) : (
-                            <div>No table ID available</div>
-                          )}
-                        </div>
-                      )}
-                    </SessionInitializer>{" "}
-                  </div>
-                }
-              />
-              <Route path="/loading/5" element={
-                  <div>
-                    Loading...
-                    <SessionInitializer>
-                      {(tableId) => (
-                        <div>
-                          {tableId ? (
-                            <div>Table ID: {tableId}</div>
-                          ) : (
-                            <div>No table ID available</div>
-                          )}
-                        </div>
-                      )}
-                    </SessionInitializer>{" "}
-                  </div>
-                } />
-              <Route path="/loading/6" element={
-                  <div>
-                    Loading...
-                    <SessionInitializer>
-                      {(tableId) => (
-                        <div>
-                          {tableId ? (
-                            <div>Table ID: {tableId}</div>
-                          ) : (
-                            <div>No table ID available</div>
-                          )}
-                        </div>
-                      )}
-                    </SessionInitializer>{" "}
-                  </div>
-                } />
+              <Route path="/" element={<div>Loading..</div>} />
               <Route
                 path="/home/:orderId"
                 element={<MainPage tableId={tableId} />}
@@ -101,10 +49,10 @@ function App() {
               />
               <Route path="/payment/:orderId" element={<PaymentPage />} />
             </Routes>
-          </LanguageContext.Provider>
-        </Router>
-      )}
-    </SessionInitializer>
+          )}
+        </SessionInitializer>
+      </LanguageContext.Provider>
+    </Router>
   );
 }
 
