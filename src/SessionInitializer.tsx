@@ -12,9 +12,9 @@ function SessionInitializer({ children }: SessionInitializerProps) {
 
   useEffect(() => {
     async function initializeSession() {
-      const hashValue = window.location.hash.substring(1); // Extract value after #
-      const id = parseInt(hashValue, 10); // Parse the value as an integer
-      const tableId = !isNaN(id) ? id : null; // Check if it's a valid number
+      const hashValue = window.location.hash.substring(1); 
+      const id = parseInt(hashValue, 10); 
+      const tableId = !isNaN(id) ? id : null; 
       if (!tableId) {
         const storedTableId = localStorage.getItem("tableId");
         if (storedTableId) {
@@ -22,7 +22,7 @@ function SessionInitializer({ children }: SessionInitializerProps) {
           return;
         }
       } else {
-        setTableId(String(tableId)); // Convert back to string before setting state
+        setTableId(String(tableId)); 
         localStorage.setItem("tableId", String(tableId));
       }
       console.log("tableId:", tableId);

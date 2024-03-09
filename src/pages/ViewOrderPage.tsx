@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { LanguageContext } from "../App";
 import DishRow from "./DishRow";
 import axios from "../axiosConfig";
-import PaymentIcon from "../assets/payment.png";
+// import PaymentIcon from "../assets/payment.png";
 import "../styles/ViewOrderPage.css";
 
 interface Dish {
@@ -148,11 +148,6 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
 
       return newQuantities;
     });
-  };
-
-  const handlePayClick = () => {
-    console.log("Payment process initiated");
-    console.log("Selected Dishes:", selectedDishes);
   };
 
   return (
