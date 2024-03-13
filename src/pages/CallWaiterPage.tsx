@@ -8,10 +8,12 @@ import GlassIcon from "../assets/glass.png";
 import CupIcon from "../assets/cup.png";
 import OtherIcon from "../assets/other.png";
 import PlateIcon from "../assets/plate.png";
+import MenuIcon from "../assets/menu.png";
 
 type Translation = {
   pageTitle: string;
   confirmationTitle: string;
+  menu: string;
   cup: string;
   glass: string;
   plate: string;
@@ -31,6 +33,7 @@ const CallWaiterPage: React.FC = () => {
     RO: {
       pageTitle: "Chelner",
       confirmationTitle: "Confirmați",
+      menu: "MENIU",
       cup: "CANĂ",
       glass: "PAHAR",
       plate: "FARFURIE",
@@ -40,6 +43,7 @@ const CallWaiterPage: React.FC = () => {
     RU: {
       pageTitle: "Вызов официанта",
       confirmationTitle: "Подтвердите",
+      menu: "МЕНЮ",
       cup: "КРУЖКА",
       glass: "СТАКАН",
       plate: "ТАРЕЛКА",
@@ -55,6 +59,7 @@ const CallWaiterPage: React.FC = () => {
       plate: 3,
       tableware: 4,
       otherItem: 5,
+      menu: 8,
     };
 
     const actionNumber = actionMapping[action];
@@ -98,6 +103,13 @@ const CallWaiterPage: React.FC = () => {
           />
         ) : (
           <div>
+            <li
+              className="linkStyle"
+              onClick={() => handleActionClick("menu")}
+            >
+              <img src={MenuIcon} alt="" />
+              <span>{translations[selectedLanguage].menu}</span>
+            </li>
             <li
               className="linkStyle"
               onClick={() => handleActionClick("glass")}
