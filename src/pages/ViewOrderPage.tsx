@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { LanguageContext } from "../App";
 import DishRow from "./DishRow";
 import axios from "../axiosConfig";
+import PlusSign from "../assets/plus.png";
+import MinusSign from "../assets/minus.png";
+import ClickIcon from "../assets/click.png";
 // import PaymentIcon from "../assets/payment.png";
 import "../styles/ViewOrderPage.css";
 
@@ -79,15 +82,15 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       yourOrder: "Заказ:",
       totalAmount: "ВСЕГО:",
       payment: "ПЛАЧУ Я",
-      message1: "Выбери свои блюда <кликни на товар> 👆",
-      message2: "Выбери количество <➖> / <➕>"
+      message1: "Выбери свои блюда <кликни на товар>",
+      message2: "Выбери количество"
     },
     RO: {
       yourOrder: "Comanda:",
       totalAmount: "TOTAL:",
       payment: "PLĂTESC EU",
-      message1: "Alege produsele tale <click pe produs> 👆",
-      message2: "Alege cantitatea <➖> / <➕>"
+      message1: "Alege produsele tale <click pe produs>",
+      message2: "Alege cantitatea"
     },
   };
 
@@ -163,10 +166,10 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       {selectedDishes.length == 0 && (
           <div className="selected-dishes">
             <h3>
-                {translations[selectedLanguage].message1}
+                {translations[selectedLanguage].message1}{<img className="click" src={ClickIcon} alt="+" />}
             </h3>
             <h3>
-                {translations[selectedLanguage].message2}
+                {translations[selectedLanguage].message2}{<img className="sign" src={MinusSign} alt="+" />}/<img className="sign" src={PlusSign} alt="+"/>
             </h3>
         </div>
       )}

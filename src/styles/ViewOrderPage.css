@@ -244,3 +244,20 @@
   color:#bdbdbd;
   margin-bottom: 4px;
 }
+
+.sign {
+  border: none;
+  border-radius: 50px;
+  background-color: #9dac39;
+  height: 25px !important;
+  width: 25px !important;
+  vertical-align: middle;
+  margin: 0px 7px 4px 7px !important;
+} 
+
+.click {
+  height: 35px !important;
+  width: 35px !important;
+  vertical-align: middle;
+  margin: 0px 7px 7px 7px !important;
+} 
