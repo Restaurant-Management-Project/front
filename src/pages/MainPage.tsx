@@ -22,7 +22,7 @@ const MainPage: React.FC<Props> = ({ tableId }) => {
     },
     RO: {
       welcomeMessage: "Bine ați venit!",
-      callWaiter: "CHEAMĂ CHELNERU",
+      callWaiter: "CHEAMĂ CHELNERUL",
       viewOrder: "VEZI COMANDĂ",
       pay: "VREAU SĂ ACHIT",
     },
