@@ -50,6 +50,16 @@ const CallWaiterPage: React.FC = () => {
       tableware: "ПРИБОРЫ",
       otherItem: "ДРУГОЕ",
     },
+    EN: {
+      pageTitle: "Call Waiter",
+      confirmationTitle: "Confirm",
+      menu: "MENU",
+      cup: "MUG",
+      glass: "GLASS",
+      plate: "PLATE",
+      tableware: "CUTLERY",
+      otherItem: "OTHER"
+    }
   };
 
   const handleActionClick = (action: string) => {
@@ -70,19 +80,21 @@ const CallWaiterPage: React.FC = () => {
     setShowConfirmation(true);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedAction !== null) {
-      axios
-        .post(`/create-request/${orderId}/${selectedAction}`)
-        .then((response) => {
-          console.log("Post request successful:", response.data);
-          setShowConfirmation(false);
-          navigate(`/home/${orderId}`);
-        })
-        .catch((error) => {
-          console.error("Error performing post request:", error);
-          setShowConfirmation(false);
-        });
+      try {
+        const response = await axios.post('/requests/', {
+              order_id: orderId,
+              request_type: selectedAction
+            }
+        )
+        console.log("Post request successful:", response.data);
+        setShowConfirmation(false);
+        navigate(`/home/${orderId}`);
+      } catch (error) {
+        console.error("Error performing post request:", error);
+        setShowConfirmation(false);
+      }
     }
   };
 

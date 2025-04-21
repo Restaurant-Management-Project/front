@@ -11,12 +11,12 @@ export const LanguageContext = React.createContext<{
   selectedLanguage: string;
   onLanguageChange: (language: string) => void;
 }>({
-  selectedLanguage: "RO",
+  selectedLanguage: "EN",
   onLanguageChange: () => {},
 });
 
 function App() {
-  const [selectedLanguage, setSelectedLanguage] = useState("RO");
+  const [selectedLanguage, setSelectedLanguage] = useState("EN");
 
   const handleLanguageChange = (language: string) => {
     setSelectedLanguage(language);

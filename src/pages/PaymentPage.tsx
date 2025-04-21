@@ -34,6 +34,12 @@ const PaymentPage: React.FC = () => {
       card: "КАРТОЙ",
       cash: "НАЛИЧНЫМИ",
     },
+    EN: {
+      pageTitle: "Payment",
+      confirmationTitle: "Confirm",
+      card: "CARD",
+      cash: "CASH"
+    },
   };
 
   const handlePaymentOptionClick = (option: string) => {
@@ -52,19 +58,21 @@ const PaymentPage: React.FC = () => {
     setShowConfirmation(true);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedOption !== null) {
-      axios
-        .post(`/create-request/${orderId}/${selectedOption}`)
-        .then((response) => {
-          console.log("Post request successful:", response.data);
-          setShowConfirmation(false);
-          navigate(`/home/${orderId}`);
-        })
-        .catch((error) => {
-          console.error("Error performing post request:", error);
-          setShowConfirmation(false);
-        });
+      try {
+        const response = await axios.post('/requests/', {
+              order_id: orderId,
+              request_type: selectedOption
+            }
+        )
+        console.log("Post request successful:", response.data);
+        setShowConfirmation(false);
+        navigate(`/home/${orderId}`);
+      } catch (error) {
+        console.error("Error performing post request:", error);
+        setShowConfirmation(false);
+      }
     }
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
-import CheckmarkIcon from "../assets/checkmark.png";
-import CancelIcon from "../assets/cancel.png";
+import CheckmarkIcon from "../assets/yes.png";
+import CancelIcon from "../assets/no.png";
 import "../styles/ConfirmationDialogProps.css";
 
 interface ConfirmationDialogProps {

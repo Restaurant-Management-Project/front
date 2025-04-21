@@ -29,11 +29,18 @@ function SessionInitializer({ children }: SessionInitializerProps) {
       }
       console.log("tableId:", tableId);
       if (tableId) {
-        const response = await axios.get(`/init-session/${String(tableId)}`);
-        console.log("response.data:", response.data);
-        const orderId = response.data; 
-        if (orderId) {
-          navigate(`/home/${orderId}`);
+        try {
+          const response = await axios.post("/create-session/", {
+            table_id: tableId,
+          });
+
+          const orderId = response.data?.order_id;
+          console.log("orderId:", orderId);
+          if (orderId) {
+            navigate(`/home/${orderId}`);
+          }
+        } catch (error) {
+          console.error("Error creating session:", error);
         }
       }
     }

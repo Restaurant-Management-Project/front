@@ -16,6 +16,9 @@ const Tables: React.FC = () => {
     RO: {
       table: "Masa",
     },
+    EN: {
+      table: "Table",
+    },
   };
 
   const handleClick = async (tableId: string) => {

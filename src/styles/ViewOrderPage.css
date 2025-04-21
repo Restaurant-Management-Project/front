@@ -181,8 +181,7 @@
   margin-top: 1vh;
   background-color: var(--link-background);
   color: var(--link-color);
-  border: 15px solid #1e0e00;
-  border-image: url("../assets/border.png") 40 repeat;
+  border: 10px solid var(--link-color);
   text-decoration: none;
   border-radius: 2px;
   cursor: pointer;

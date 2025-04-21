@@ -26,6 +26,12 @@ const MainPage: React.FC<Props> = ({ tableId }) => {
       viewOrder: "VEZI COMANDĂ",
       pay: "VREAU SĂ ACHIT",
     },
+    EN: {
+      welcomeMessage: "Welcome!",
+      callWaiter: "CALL WAITER",
+      viewOrder: "VIEW ORDER",
+      pay: "I WANT TO PAY"
+    },
   };
 
   return (

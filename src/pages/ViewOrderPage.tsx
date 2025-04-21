@@ -65,7 +65,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
     };
 
     fetchDishes();
-  }, []);
+  }, [tableId]);
 
   useEffect(() => {
     const initialQuantities: Record<string, number> = {};
@@ -91,6 +91,13 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       payment: "PLĂTESC EU",
       message1: "Alege produsele tale <click pe produs>",
       message2: "Alege cantitatea"
+    },
+    EN: {
+      yourOrder: "Order:",
+      totalAmount: "TOTAL:",
+      payment: "I’M PAYING",
+      message1: "Choose your dishes <click on the item>",
+      message2: "Select quantity"
     },
   };
 

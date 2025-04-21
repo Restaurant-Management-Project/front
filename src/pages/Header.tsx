@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import BackButton from "../assets/back.png";
-import Logo from "../assets/logo.png";
 import "../styles/Header.css";
 
 interface HeaderProps {
@@ -15,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const location = useLocation();
 
-  const isMainPage = (location.pathname.startsWith("/home/") && location.pathname.length > 6) || location.pathname === "/";;
+  const isMainPage = (location.pathname.startsWith("/home/") && location.pathname.length > 6) || location.pathname === "/";
 
   return (
     <div>
@@ -37,11 +36,11 @@ const Header: React.FC<HeaderProps> = ({
           >
             <option value="RO">RO</option>
             <option value="RU">RU</option>
+            <option value="EN">EN</option>
           </select>
         </div>
       </header>
       <div className="logo-wrapper">
-        <img className="logo" src={Logo} alt="Logo" />
       </div>
     </div>
   );

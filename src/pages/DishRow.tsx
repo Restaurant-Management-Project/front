@@ -37,6 +37,9 @@ const DishRow: React.FC<DishRowProps> = ({
     RO: {
       payment: "PLĂTESC EU",
     },
+    EN: {
+      payment: "I’M PAYING",
+    },
   };
 
   return (
