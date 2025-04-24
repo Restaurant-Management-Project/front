@@ -16,8 +16,7 @@ type Translation = {
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [selectedOptionWord, setSelectedOptionWord] = useState("");
+  const [selectedOption, setSelectedOption] = useState<string | null>('null');
   const { selectedLanguage } = useContext(LanguageContext);
   const { orderId } = useParams<{ orderId: string }>();
 
@@ -43,18 +42,7 @@ const PaymentPage: React.FC = () => {
   };
 
   const handlePaymentOptionClick = (option: string) => {
-    const translationKeyMap: Record<string, number> = {
-      card: 7,
-      cash: 6,
-    };
-
-    const paymentNumber = translationKeyMap[option];
-    setSelectedOption(paymentNumber);
-    setSelectedOptionWord(
-      translations[selectedLanguage][option as keyof Translation]
-    );
-    console.log(selectedOption, selectedOptionWord);
-
+    setSelectedOption(option);
     setShowConfirmation(true);
   };
 
@@ -87,7 +75,7 @@ const PaymentPage: React.FC = () => {
         {showConfirmation ? (
           <ConfirmationDialog
             title={translations[selectedLanguage].confirmationTitle}
-            message={selectedOptionWord.toLocaleLowerCase()}
+            message={selectedOption ? selectedOption.toLocaleLowerCase() : ''}
             onConfirm={handleConfirm}
             onCancel={handleCancel}
           />
