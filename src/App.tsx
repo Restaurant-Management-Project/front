@@ -45,7 +45,7 @@ function App() {
               />
               <Route
                 path="/view-order/:orderId"
-                element={<ViewOrderPage tableId={tableId} />}
+                element={<ViewOrderPage/>}
               />
               <Route path="/payment/:orderId" element={<PaymentPage />} />
             </Routes>

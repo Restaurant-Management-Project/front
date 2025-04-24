@@ -5,7 +5,7 @@ import MinusSign from "../assets/minus.png";
 import "../styles/ViewOrderPage.css";
 
 interface Dish {
-  key: string;
+  id: string;
   name: { [key: string]: string };
   quantity: number;
   price: number;
@@ -57,7 +57,7 @@ const DishRow: React.FC<DishRowProps> = ({
             <button onClick={onDecrement}>
               <img src={MinusSign} alt="-" />
             </button>
-            <p className="number">{dishQuantities[dish.key]}</p>
+            <p className="number">{dishQuantities[dish.id]}</p>
             <button onClick={onIncrement}>
               <img src={PlusSign} alt="+" />
             </button>

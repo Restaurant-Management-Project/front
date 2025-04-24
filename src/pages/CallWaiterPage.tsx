@@ -23,7 +23,7 @@ type Translation = {
 
 const CallWaiterPage: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [selectedAction, setSelectedAction] = useState<number | null>(null);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [selectedActionWord, setSelectedActionWord] = useState("");
   const { selectedLanguage } = useContext(LanguageContext);
   const { orderId } = useParams<{ orderId: string }>();
@@ -63,20 +63,8 @@ const CallWaiterPage: React.FC = () => {
   };
 
   const handleActionClick = (action: string) => {
-    const actionMapping: Record<string, number> = {
-      glass: 1,
-      cup: 2,
-      plate: 3,
-      tableware: 4,
-      otherItem: 5,
-      menu: 8,
-    };
-
-    const actionNumber = actionMapping[action];
-    setSelectedAction(actionNumber);
-    setSelectedActionWord(
-      translations[selectedLanguage][action as keyof Translation]
-    );
+    setSelectedAction(action);
+    setSelectedActionWord(translations[selectedLanguage][action as keyof Translation]);
     setShowConfirmation(true);
   };
 

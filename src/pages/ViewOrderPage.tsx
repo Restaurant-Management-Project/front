@@ -7,20 +7,19 @@ import MinusSign from "../assets/minus.png";
 import ClickIcon from "../assets/click.png";
 // import PaymentIcon from "../assets/payment.png";
 import "../styles/ViewOrderPage.css";
+import {useParams} from "react-router-dom";
 
 interface Dish {
-  key: string;
+  id: string;
   name: { [key: string]: string };
   quantity: number;
   price: number;
 }
 
-interface Props {
-  tableId: string | null; 
-}
-
-const ViewOrderPage: React.FC<Props> = ({ tableId }) => { 
+const ViewOrderPage: React.FC = () =>  {
   const { selectedLanguage } = useContext(LanguageContext);
+
+  const { orderId } = useParams<{ orderId: string }>();
 
   const initialExpandedRows: Record<string, boolean> = {};
   const [expandedRows, setExpandedRows] = useState(initialExpandedRows);
@@ -38,7 +37,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
   useEffect(() => {
     const fetchDishes = async () => {
       try {
-        const response = await axios.get(`/get-by-table/${tableId}`);
+        const response = await axios.get(`/order-items-by-order/${orderId}`);
         const data = response.data;
         const transformedDishes: Dish[] = data.map((dish: any) => {
           let parsedName = {};
@@ -51,7 +50,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
           }
 
           return {
-            key: dish.key,
+            id:  dish.id,
             name: parsedName,
             quantity: dish.quantity,
             price: dish.productPrice,
@@ -65,13 +64,13 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
     };
 
     fetchDishes();
-  }, [tableId]);
+  }, [orderId]);
 
   useEffect(() => {
     const initialQuantities: Record<string, number> = {};
 
     dishes.forEach((dish) => {
-      initialQuantities[dish.key] = 0;
+      initialQuantities[dish.id] = 0;
     });
 
     setDishQuantities(initialQuantities);
@@ -121,7 +120,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
     setDishQuantities((prevQuantities) => {
       const currentQuantity = prevQuantities[rowKey] || 0;
       const newQuantity = Math.min(
-        dishes.find((dish) => dish.key === rowKey)?.quantity || 0,
+        dishes.find((dish) => dish.id === rowKey)?.quantity || 0,
         currentQuantity + 1
       );
 
@@ -132,11 +131,11 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
 
       if (
         newQuantity > 0 &&
-        !selectedDishes.some((dish) => dish.key === rowKey)
+        !selectedDishes.some((dish) => dish.id === rowKey)
       ) {
         setSelectedDishes([
           ...selectedDishes,
-          dishes.find((dish) => dish.key === rowKey)!,
+          dishes.find((dish) => dish.id === rowKey)!,
         ]);
       }
 
@@ -157,7 +156,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       };
 
       if (newQuantities[rowKey] === 0) {
-        setSelectedDishes(selectedDishes.filter((dish) => dish.key !== rowKey));
+        setSelectedDishes(selectedDishes.filter((dish) => dish.id !== rowKey));
       }
 
       return newQuantities;
@@ -187,7 +186,7 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
                 {selectedDishes
                   .reduce(
                     (total, dish) =>
-                      total + dishQuantities[dish.key] * dish.price,
+                      total + dishQuantities[dish.id] * dish.price,
                     0
                   )
                   .toFixed(2)}{" "}
@@ -195,13 +194,13 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
               </h2>
           <div className="selected-dishes-text">
             {selectedDishes.map((dish) => (
-              <div className="dish-price" key={dish.key}>
+              <div className="dish-price" key={dish.id}>
                 <p className="dish-name">
                   {dish.name[selectedLanguage].toUpperCase()}
                 </p>
                 <p className="dish-quantity">{`[${
-                  dishQuantities[dish.key]
-                }] = ${(dishQuantities[dish.key] * dish.price).toFixed(2)}`}</p>
+                  dishQuantities[dish.id]
+                }] = ${(dishQuantities[dish.id] * dish.price).toFixed(2)}`}</p>
               </div>
             ))}
             <div className="total-amount-container">
@@ -217,12 +216,12 @@ const ViewOrderPage: React.FC<Props> = ({ tableId }) => {
       <div className="order-container">
         {dishes.map((dish) => (
           <DishRow
-            key={dish.key}
+            key={dish.id}
             dish={dish}
-            expanded={expandedRows[dish.key]}
-            onRowClick={() => handleRowClick(dish.key)}
-            onIncrement={(e) => handleIncrement(dish.key, e)}
-            onDecrement={(e) => handleDecrement(dish.key, e)}
+            expanded={expandedRows[dish.id]}
+            onRowClick={() => handleRowClick(dish.id)}
+            onIncrement={(e) => handleIncrement(dish.id, e)}
+            onDecrement={(e) => handleDecrement(dish.id, e)}
             dishQuantities={dishQuantities}
           />
         ))}
