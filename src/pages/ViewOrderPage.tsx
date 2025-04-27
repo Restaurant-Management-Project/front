@@ -2,16 +2,16 @@ import React, { useState, useContext, useEffect } from "react";
 import { LanguageContext } from "../App";
 import DishRow from "./DishRow";
 import axios from "../axiosConfig";
-import PlusSign from "../assets/plus.png";
-import MinusSign from "../assets/minus.png";
-import ClickIcon from "../assets/click.png";
+// import PlusSign from "../assets/plus.png";
+// import MinusSign from "../assets/minus.png";
+// import ClickIcon from "../assets/click.png";
 // import PaymentIcon from "../assets/payment.png";
 import "../styles/ViewOrderPage.css";
 import {useParams} from "react-router-dom";
 
 interface Dish {
   id: string;
-  name: { [key: string]: string };
+  name: string;
   quantity: number;
   price: number;
 }
@@ -37,23 +37,15 @@ const ViewOrderPage: React.FC = () =>  {
   useEffect(() => {
     const fetchDishes = async () => {
       try {
-        const response = await axios.get(`/order-items-by-order/${orderId}`);
+        const response = await axios.get(`/order-items-by-order/1`);
         const data = response.data;
+        console.log(data);
         const transformedDishes: Dish[] = data.map((dish: any) => {
-          let parsedName = {};
-          if (dish.productName) {
-            try {
-              parsedName = JSON.parse(dish.productName);
-            } catch (error) {
-              console.error("Error parsing dish name:", error);
-            }
-          }
-
           return {
             id:  dish.id,
-            name: parsedName,
+            name: dish.name,
             quantity: dish.quantity,
-            price: dish.productPrice,
+            price: dish.price,
           };
         });
 
@@ -169,16 +161,16 @@ const ViewOrderPage: React.FC = () =>  {
         {translations[selectedLanguage].yourOrder} {totalAmount}{" "}
         <span> (MDL)</span>{" "}
       </h2>
-      {selectedDishes.length == 0 && (
-          <div className="selected-dishes">
-            <h3>
-                {translations[selectedLanguage].message1}{<img className="click" src={ClickIcon} alt="+" />}
-            </h3>
-            <h3>
-                {translations[selectedLanguage].message2}{<img className="sign" src={MinusSign} alt="+" />}/<img className="sign" src={PlusSign} alt="+"/>
-            </h3>
-        </div>
-      )}
+      {/*{selectedDishes.length == 0 && (*/}
+      {/*    <div className="selected-dishes">*/}
+      {/*      <h3>*/}
+      {/*          {translations[selectedLanguage].message1}{<img className="click" src={ClickIcon} alt="+" />}*/}
+      {/*      </h3>*/}
+      {/*      <h3>*/}
+      {/*          {translations[selectedLanguage].message2}{<img className="sign" src={MinusSign} alt="+" />}/<img className="sign" src={PlusSign} alt="+"/>*/}
+      {/*      </h3>*/}
+      {/*  </div>*/}
+      {/*)}*/}
       {selectedDishes.length > 0 && (
         <div className="selected-dishes">
           <h2>
@@ -196,16 +188,13 @@ const ViewOrderPage: React.FC = () =>  {
             {selectedDishes.map((dish) => (
               <div className="dish-price" key={dish.id}>
                 <p className="dish-name">
-                  {dish.name[selectedLanguage].toUpperCase()}
+                  {dish.name.toUpperCase()}
                 </p>
                 <p className="dish-quantity">{`[${
                   dishQuantities[dish.id]
-                }] = ${(dishQuantities[dish.id] * dish.price).toFixed(2)}`}</p>
+                }] = ${(dishQuantities[dish.id] * dish.price)}`}</p>
               </div>
             ))}
-            <div className="total-amount-container">
-
-            </div>
           </div>
           {/* <button onClick={handlePayClick}>
             <img src={PaymentIcon} alt="" />

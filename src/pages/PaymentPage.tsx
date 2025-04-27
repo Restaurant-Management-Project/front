@@ -41,6 +41,8 @@ const PaymentPage: React.FC = () => {
     },
   };
 
+  const t = translations[selectedLanguage];
+
   const handlePaymentOptionClick = (option: string) => {
     setSelectedOption(option);
     setShowConfirmation(true);
@@ -71,10 +73,10 @@ const PaymentPage: React.FC = () => {
   return (
     <div>
       <div className="wrapper">
-        <h2>{translations[selectedLanguage].pageTitle}</h2>
+        <h2>{t.pageTitle}</h2>
         {showConfirmation ? (
           <ConfirmationDialog
-            title={translations[selectedLanguage].confirmationTitle}
+            title={t.confirmationTitle}
             message={selectedOption ? selectedOption.toLocaleLowerCase() : ''}
             onConfirm={handleConfirm}
             onCancel={handleCancel}
@@ -86,14 +88,14 @@ const PaymentPage: React.FC = () => {
               onClick={() => handlePaymentOptionClick("card")}
             >
               <img src={CardIcon} alt="" />
-              <span>{translations[selectedLanguage].card}</span>
+              <span>{t.card}</span>
             </li>
             <li
               className="linkStyle"
               onClick={() => handlePaymentOptionClick("cash")}
             >
               <img src={CashIcon} alt="" />
-              <span>{translations[selectedLanguage].cash}</span>
+              <span>{t.cash}</span>
             </li>
           </div>
         )}

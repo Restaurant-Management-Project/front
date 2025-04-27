@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import CallWaiterPage from "./pages/CallWaiterPage";
 import ViewOrderPage from "./pages/ViewOrderPage";
+import ViewMenuPage from "./pages/ViewMenuPage";
 import PaymentPage from "./pages/PaymentPage";
 import Header from "./pages/Header";
 import SessionInitializer from "./SessionInitializer";
@@ -47,7 +48,14 @@ function App() {
                 path="/view-order/:orderId"
                 element={<ViewOrderPage/>}
               />
-              <Route path="/payment/:orderId" element={<PaymentPage />} />
+              <Route
+                  path="/view-menu/:orderId"
+                  element={<ViewMenuPage/>}
+              />
+              <Route
+                  path="/payment/:orderId"
+                  element={<PaymentPage />}
+              />
             </Routes>
           )}
         </SessionInitializer>

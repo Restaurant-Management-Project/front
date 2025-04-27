@@ -17,8 +17,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  border: 1px solid #ddd;
-  color: #e7e7e7;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -49,8 +49,8 @@
 .expanded-row {
   display: flex;
   padding: 5px 10px;
-  border: 1px solid #ddd;
-  color: #e7e7e7;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
   font-size: 20px;
   border-radius: 20px;
   flex-direction: column;
