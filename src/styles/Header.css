@@ -11,28 +11,9 @@
   background-color: var(--background-color);
 }
 
-@media (orientation: portrait) {
-  .logo-wrapper {
-    margin-top: -15px;
-  }
-}
-
-@media (orientation: landscape) {
-  .logo-wrapper {
-    margin-top: 18px;
-  }
-}
-
-.logo-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .logo {
-  width: 90vw;
-  max-width: 310px;
-  opacity: 0.75;
+  margin-top: 5px;
+  width: 180px;
 }
 
 .language-dropdown {

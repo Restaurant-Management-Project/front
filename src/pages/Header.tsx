@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import BackButton from "../assets/back.png";
+import TableBell  from "../assets/TableBell.png";
 import "../styles/Header.css";
 
 interface HeaderProps {
@@ -29,6 +30,7 @@ const Header: React.FC<HeaderProps> = ({
             onClick={() => window.history.back()}
           />
         )}
+        <img className="logo" src={TableBell} alt={TableBell}/>
         <div className="language-dropdown">
           <select
             value={selectedLanguage}
@@ -40,8 +42,6 @@ const Header: React.FC<HeaderProps> = ({
           </select>
         </div>
       </header>
-      <div className="logo-wrapper">
-      </div>
     </div>
   );
 };
