@@ -37,9 +37,8 @@ const ViewOrderPage: React.FC = () =>  {
   useEffect(() => {
     const fetchDishes = async () => {
       try {
-        const response = await axios.get(`/order-items-by-order/1`);
+        const response = await axios.get(`/order-items-by-order/${orderId}`);
         const data = response.data;
-        console.log(data);
         const transformedDishes: Dish[] = data.map((dish: any) => {
           return {
             id:  dish.id,

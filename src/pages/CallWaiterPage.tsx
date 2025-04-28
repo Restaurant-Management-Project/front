@@ -14,11 +14,11 @@ type Translation = {
   pageTitle: string;
   confirmationTitle: string;
   menu: string;
-  cup: string;
+  mug: string;
   glass: string;
   plate: string;
   tableware: string;
-  otherItem: string;
+  other: string;
 };
 
 const CallWaiterPage: React.FC = () => {
@@ -34,31 +34,31 @@ const CallWaiterPage: React.FC = () => {
       pageTitle: "Chelner",
       confirmationTitle: "Confirmați",
       menu: "MENIU",
-      cup: "CANĂ",
+      mug: "CANĂ",
       glass: "PAHAR",
       plate: "FARFURIE",
       tableware: "TACÂM",
-      otherItem: "ALTCEVA",
+      other: "ALTCEVA",
     },
     RU: {
       pageTitle: "Вызов официанта",
       confirmationTitle: "Подтвердите",
       menu: "МЕНЮ",
-      cup: "КРУЖКА",
+      mug: "КРУЖКА",
       glass: "СТАКАН",
       plate: "ТАРЕЛКА",
       tableware: "ПРИБОРЫ",
-      otherItem: "ДРУГОЕ",
+      other: "ДРУГОЕ",
     },
     EN: {
       pageTitle: "Call Waiter",
       confirmationTitle: "Confirm",
       menu: "MENU",
-      cup: "MUG",
+      mug: "MUG",
       glass: "GLASS",
       plate: "PLATE",
-      tableware: "CUTLERY",
-      otherItem: "OTHER"
+      tableware: "TABLEWARE",
+      other: "OTHER"
     }
   };
 
@@ -117,9 +117,9 @@ const CallWaiterPage: React.FC = () => {
               <img src={GlassIcon} alt="" />
               <span>{translations[selectedLanguage].glass}</span>
             </li>
-            <li className="linkStyle" onClick={() => handleActionClick("cup")}>
+            <li className="linkStyle" onClick={() => handleActionClick("mug")}>
               <img src={CupIcon} alt="" />
-              <span>{translations[selectedLanguage].cup}</span>
+              <span>{translations[selectedLanguage].mug}</span>
             </li>
             <li
               className="linkStyle"
@@ -137,10 +137,10 @@ const CallWaiterPage: React.FC = () => {
             </li>
             <li
               className="linkStyle"
-              onClick={() => handleActionClick("otherItem")}
+              onClick={() => handleActionClick("other")}
             >
               <img src={OtherIcon} alt="" />
-              <span>{translations[selectedLanguage].otherItem}</span>
+              <span>{translations[selectedLanguage].other}</span>
             </li>
           </div>
         )}
