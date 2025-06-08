@@ -7,6 +7,7 @@ type MenuItem = {
     id: number;
     name: string;
     description: string;
+    ingredients: string;
     price: string;
     is_available: boolean;
     created_at: string;
@@ -63,6 +64,7 @@ const ViewMenuPage: React.FC = () => {
                             <span className="price-tag">{item.price} MDL</span>
                         </div>
                         <p className="description">{item.description}</p>
+                        <p className="description">Ingredients: {item.ingredients}</p>
                         <span className={`availability ${item.is_available ? "available" : "not-available"}`}>
               {item.is_available ? t.available : t.notAvailable}
             </span>
